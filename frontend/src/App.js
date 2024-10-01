@@ -11,6 +11,7 @@ const customStyleMap = {
     color: 'red',
   },
 }; 
+
 const mediaBlockRenderer = (block) => {
   if (block.getType() === 'atomic') {
     return {
@@ -28,18 +29,22 @@ const App = () => {
   const socketRef = useRef(null);
 
   useEffect(() => {
+    // Establish WebSocket connection to the server
     socketRef.current = new WebSocket('ws://localhost:3001');
   
     socketRef.current.onmessage = async (event) => {
       const data = JSON.parse(event.data);
   
       if (data.type === 'ASSIGN_USER') {
+        // Receive and store the unique user ID assigned by the server
         setUserId(data.userId);
       } else if (data.type === 'CONTENT_UPDATE') {
+        // Update the editor content with data received from other users
         const rawContent = data.content;
         const contentState = convertFromRaw(rawContent);
         setEditorState(EditorState.createWithContent(contentState));
   
+        // Update the list of authors who have made changes
         setAuthors((prevAuthors) => {
           const updatedAuthors = [...prevAuthors, `Author: ${data.userId}`];
           return Array.from(new Set(updatedAuthors));
@@ -47,19 +52,19 @@ const App = () => {
       }
     };
   
+    // Clean up the WebSocket connection when the component unmounts
     return () => {
       socketRef.current.close();
     };
   }, []);
   
-  
-
   const onEditorChange = (newState) => {
     setEditorState(newState);
 
     const content = newState.getCurrentContent();
     const rawContent = convertToRaw(content);
 
+    // Send content changes to the server via WebSocket
     if (socketRef.current && socketRef.current.readyState === WebSocket.OPEN) {
       socketRef.current.send(JSON.stringify({
         type: 'CONTENT_CHANGE',

@@ -12,12 +12,14 @@ wss.on('connection', (ws) => {
   const userId = `user-${userCount}`;
   console.log(`Client connected: ${userId}`);
 
+  // Send a unique user ID to the connected client
   ws.send(JSON.stringify({ type: 'ASSIGN_USER', userId }));
 
   ws.on('message', (message) => {
     try {
       let messageStr;
       if (message instanceof Buffer) {
+        // Convert the message from Buffer to string format
         messageStr = message.toString('utf-8');
       } else {
         messageStr = message.toString();
@@ -27,9 +29,11 @@ wss.on('connection', (ws) => {
         throw new Error('Empty or invalid message received');
       }
 
+      // Parse the JSON message received from the client
       const data = JSON.parse(messageStr); 
       console.log(`Received from ${data.userId}: ${JSON.stringify(data.content)}`);
 
+      // Broadcast the received content to all other connected clients
       wss.clients.forEach((client) => {
         if (client !== ws && client.readyState === WebSocket.OPEN) {
           client.send(JSON.stringify({
