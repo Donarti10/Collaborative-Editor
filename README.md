@@ -28,11 +28,15 @@ This is a collaborative real-time text editor, built with React and `draft-js`, 
     ```bash
     npm install
     ```
-3. Start the development server:
+3. Install the latest version of `react-scripts`:
+    ```bash
+    npm install react-scripts@latest
+    ```
+4. Start the development server:
     ```bash
     npm start
     ```
-4. The app will be available at `http://localhost:3000`.
+5. The app will be available at `http://localhost:3000`.
 
 ### Backend
 1. Navigate to the `backend` directory:
