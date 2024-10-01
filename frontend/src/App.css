@@ -2,6 +2,7 @@
   width: 95%;
   margin: 0 auto;
   font-family: Arial, sans-serif;
+  position: relative;
 }
 
 .toolbar {
@@ -63,6 +64,7 @@
 .RichEditor-editor {
   border-top: 1px solid #ddd;
   cursor: text;
+  
   font-size: 16px;
   margin-top: 10px;
   min-height: 400px;
@@ -94,6 +96,8 @@
   cursor: pointer;
   margin-right: 16px;
   padding: 2px 0;
+  display: flex;
+  flex-wrap: wrap;
 }
 
 .RichEditor-activeButton {
@@ -108,4 +112,3 @@
   margin: 16px 0;
   padding: 10px 20px;
 }
-
