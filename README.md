@@ -76,11 +76,3 @@ The WebSocket server uses `yjs` for real-time syncing of document changes and ha
 ### Backend:
 - `ws` for WebSocket server.
 - `yjs` and `y-websocket` for syncing real-time document changes.
-
-## Contribution
-
-Feel free to submit issues or pull requests to improve the project.
-
-## License
-
-MIT License
